@@ -1,3 +1,6 @@
 require_relative '../config/environment'
 
-ExampleCLI.new.call
+
+#require_relative '../lib/runners/violation_cli'
+
+ViolationsCLI.new.call
