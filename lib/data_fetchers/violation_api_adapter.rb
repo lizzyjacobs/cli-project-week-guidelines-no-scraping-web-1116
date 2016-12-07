@@ -8,15 +8,18 @@ class ViolationApiAdapter
   end
 
   def fetch_violations
+    exist = 0
     violation_data = RestClient.get(BASE_URL)
     violation_array = JSON.parse(violation_data)
     violation_array.each do |violation|
       if violation["dba"] == restaurant && violation["zipcode"] == zip_code
+        exist += 1
         new_output = ViolationOutput.new((violation["street"]), (violation["grade"]), (violation["violation_description"]))
-      else
-        puts "Woops! Can't find what you're looking for. Please try a new restaurant."
-        ViolationsCLI.new.call
       end
+    end
+    if exist == 0
+      puts "Woops! Can't find what you're looking for. Please try a new restaurant."
+      ViolationsCLI.new.call
     end
   end
 
